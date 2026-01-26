@@ -13,7 +13,6 @@ export class Person {
     @PrimaryGeneratedColumn('uuid')
     id: string;
 
-
     // NOME
     @Column({type: 'varchar', length: 150})
     name: string;
