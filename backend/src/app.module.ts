@@ -3,6 +3,7 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import {ConfigModule} from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { PersonModule } from './person/person.module';
 
 @Module({
   imports: [
@@ -15,7 +16,9 @@ import { TypeOrmModule } from '@nestjs/typeorm';
       url: process.env.DATABASE_URL,
       autoLoadEntities: true,
       synchronize: true
-    })
+    }),
+
+    PersonModule
 
 
   ],
