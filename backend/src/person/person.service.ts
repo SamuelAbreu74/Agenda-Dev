@@ -25,7 +25,9 @@ export class PersonService {
   }
 
   findAll() {
-    return `This action returns all person`;
+    const result = this.personsRepository.find()
+
+    return result;
   }
 
   findOne(id: number) {
