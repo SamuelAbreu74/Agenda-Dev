@@ -30,8 +30,9 @@ export class PersonService {
     return result;
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} person`;
+  findOne(id: string) {
+    const result = this.personsRepository.findOneBy({id: id})
+    return result;
   }
 
   update(id: number, updatePersonDto: UpdatePersonDto) {
