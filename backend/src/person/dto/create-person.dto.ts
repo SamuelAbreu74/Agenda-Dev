@@ -38,4 +38,37 @@ export class CreatePersonDto {
     company?: string;
 
 
+    // =-=-=-= ENDEREÇO =-=-=-=
+
+    // RUA
+    @IsString()
+    @Length(10, 150)
+    street: string;
+
+    // NÚMERO
+    @IsString()
+    @Length(1, 10)
+    number: string;
+
+    // BAIRRO
+    @IsString()
+    @Length(5, 100)
+    neighborhood: string;
+
+    // CIDADE
+    @IsString()
+    @Length(5, 100)
+    city: string;
+
+    // ESTADO (UF)
+    @IsString()
+    @Length(2)
+    state: string;
+    
+    // CEP
+    @IsString()
+    @Length(8)
+    cep: string;
+
+
 }
