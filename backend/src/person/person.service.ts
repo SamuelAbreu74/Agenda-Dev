@@ -21,25 +21,26 @@ export class PersonService {
       birthDate: new Date(dto.birthDate),
     })
 
-    return this.personsRepository.save(Person);
+    return await this.personsRepository.save(Person);
   }
 
-  findAll() {
-    const result = this.personsRepository.find()
-
+  async findAll() {
+    const result = await this.personsRepository.find()
     return result;
   }
 
-  findOne(id: string) {
-    const result = this.personsRepository.findOneBy({id: id})
+  async findOne(id: string) {
+    const result = await this.personsRepository.findOneBy({id: id})
     return result;
   }
 
-  update(id: number, updatePersonDto: UpdatePersonDto) {
-    return `This action updates a #${id} person`;
+  async update(id: string, dto: UpdatePersonDto) {
+    const result = await this.personsRepository.update(id, dto);
+    return result; 
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} person`;
+  async remove(id: string) {
+    const result = await this.personsRepository.delete({id: id})
+    return result;
   }
 }
