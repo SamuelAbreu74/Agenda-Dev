@@ -18,18 +18,12 @@ interface Person {
 }
 
 
-interface PersonsResponse {
-    message: string;
-    all_persons: Person[];
-}
-
 
 export default async function PersonComponent() {
 
     // Chamada ao endpoint do backend
     const response = await fetch('http://localhost:3001/persons')
-    const data = await response.json() as PersonsResponse
-
+    const data = await response.json() 
     const persons = data.all_persons;
 
     return (
