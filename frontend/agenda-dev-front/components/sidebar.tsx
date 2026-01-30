@@ -74,7 +74,7 @@ export default function Sidebar() {
 
     return (
         <div className="text-black  bg-white relative flex min-h-screen">
-            <aside className="shrink-0 w-60 flex flex-col gap-4 items-start rounded-r-2xl border border-gray-200 p-4 bg-white shadow-sm">
+            <aside className="shrink-0 w-60 flex flex-col gap-4 rounded-r-2xl border border-gray-200 p-4 bg-white shadow-sm">
                 <div>
                     <h1 className="text-lg font-semibold uppercase tracking-wide text-gray-800 ml-4">Agenda-Dev</h1>
                 </div>
