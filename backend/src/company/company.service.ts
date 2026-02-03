@@ -35,6 +35,12 @@ export class CompanyService {
     return result;
   }
 
+  async countAll(){
+    const result = await this.companiesRepository.find();
+    const total_of_companies = result.length
+    return total_of_companies;
+  }
+
   async update(id: string, Dto: UpdateCompanyDto) {
     const result = await this.companiesRepository.update(id, Dto);
     return result;
