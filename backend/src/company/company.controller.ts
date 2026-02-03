@@ -8,27 +8,30 @@ export class CompanyController {
   constructor(private readonly companyService: CompanyService) {}
 
   @Post()
-  create(@Body() createCompanyDto: CreateCompanyDto) {
+  async create(@Body() createCompanyDto: CreateCompanyDto) {
     return this.companyService.create(createCompanyDto);
   }
 
   @Get()
-  findAll() {
+  async findAll() {
     return this.companyService.findAll();
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
+  async findOne(@Param('id') id: string) {
     return this.companyService.findOne(id);
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateCompanyDto: UpdateCompanyDto) {
-    return this.companyService.update(+id, updateCompanyDto);
+  async update(@Param('id') id: string, @Body() updateCompanyDto: UpdateCompanyDto) {
+    await this.companyService.update(id, updateCompanyDto);
+    const updated_data = await this.companyService.findOne(id);
+    return {message: "Atualizado com Sucesso!", updated_data};
+
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
+  async remove(@Param('id') id: string) {
     return this.companyService.remove(+id);
   }
 }
