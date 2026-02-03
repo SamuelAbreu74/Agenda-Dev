@@ -1,3 +1,6 @@
+import RegisteredCompanies from "@/components/registeredCompanies"
+import RegisteredPersons from "@/components/registeredPersons";
+
 export default function Home() {
 
   return (
@@ -26,12 +29,8 @@ export default function Home() {
             <h2 className="text-xl font-semibold text-gray-800 text-center">Aniversariantes do Mês</h2>
           </div>
           <div className="grid min-h-60 gap-6">
-            <div className="rounded-2xl border border-gray-200 bg-white shadow-sm p-6 flex items-center justify-center hover:shadow-md transition-shadow">
-              <h2 className="text-lg font-semibold text-gray-800">Empresas Cadastradas</h2>
-            </div>
-            <div className="rounded-2xl border border-gray-200 bg-white shadow-sm p-6   flex items-center justify-center hover:shadow-md transition-shadow">
-              <h2 className="text-lg font-semibold text-gray-800">Pessoas Cadastradas</h2>
-            </div>
+            <RegisteredCompanies/>
+            <RegisteredPersons/>
           </div>
         </div>
       </main>
