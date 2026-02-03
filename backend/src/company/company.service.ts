@@ -10,7 +10,7 @@ export class CompanyService {
   constructor(
     @InjectRepository(Company)
     private readonly companiesRepository: Repository<Company>
-  ) {}
+  ) { }
 
 
   async create(Dto: CreateCompanyDto): Promise<Company> {
@@ -26,8 +26,13 @@ export class CompanyService {
     return result;
   }
 
-  async findOne(id: number) {
-    return `This action returns a #${id} company`;
+  async findOne(id: string) {
+    const result = await this.companiesRepository.findOne({
+      where: { id: id },
+      relations: { accountable: true }
+    },
+    );
+    return result;
   }
 
   async update(id: number, updateCompanyDto: UpdateCompanyDto) {
