@@ -1,22 +1,3 @@
-interface Company {
-    id: string;
-    fantasyName: string;
-    companyName: string;
-    email: string;
-    cnpj: string;
-    accountable: string;
-    cellContact: string;
-    whatsappContact: string;
-    fixedContact: string;
-    street: string;
-    number: string;
-    neighborhood: string;
-    city: string;
-    state: string;
-    cep: string;
-}
-
-
 export default async function RegisteredCompanies() {
     
     const response = await fetch('http://localhost:3001/companies')
