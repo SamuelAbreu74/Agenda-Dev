@@ -40,7 +40,8 @@ export class CompanyService {
     return result;
   }
 
-  async remove(id: number) {
-    return `This action removes a #${id} company`;
+  async remove(id: string) {
+    const result = await this.companiesRepository.delete({id: id})
+    return result;
   }
 }
