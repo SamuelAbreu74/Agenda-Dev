@@ -34,6 +34,12 @@ export class PersonService {
     return result;
   }
 
+  async countAll(){
+    const result = await this.personsRepository.find()
+    const total_of_persons = result.length
+    return total_of_persons;
+  }
+
   async update(id: string, dto: UpdatePersonDto) {
     const result = await this.personsRepository.update(id, dto);
     return result; 
