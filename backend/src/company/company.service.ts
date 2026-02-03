@@ -35,8 +35,9 @@ export class CompanyService {
     return result;
   }
 
-  async update(id: number, updateCompanyDto: UpdateCompanyDto) {
-    return `This action updates a #${id} company`;
+  async update(id: string, Dto: UpdateCompanyDto) {
+    const result = await this.companiesRepository.update(id, Dto);
+    return result;
   }
 
   async remove(id: number) {
