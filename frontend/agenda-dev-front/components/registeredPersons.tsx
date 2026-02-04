@@ -1,11 +1,11 @@
 export default async function RegisteredPersons() {
     
-    const response = await fetch('http://localhost:3001/persons');
+    const response = await fetch('http://localhost:3001/persons/count');
     const data = await response.json()
-    const number_of_persons = data.all_persons.length;
+    const number_of_persons = data;
 
     return (
-        <div className="rounded-2xl border border-gray-200 bg-white shadow-sm p-6 gap-2 flex flex-col max-w-fit items-start justify-center hover:shadow-md transition-shadow">
+        <div className="rounded-2xl border border-gray-200 bg-white shadow-sm p-6 gap-2 flex flex-col max-w-65 items-start justify-center hover:shadow-md transition-shadow">
             <div>
                 <h2 className="text-lg font-semibold text-gray-800">Pessoas Cadastradas</h2>
             </div>

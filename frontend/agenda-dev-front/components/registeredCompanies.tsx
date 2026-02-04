@@ -1,12 +1,12 @@
 export default async function RegisteredCompanies() {
 
-    const response = await fetch('http://localhost:3001/companies')
+    const response = await fetch('http://localhost:3001/companies/count')
     const data = await response.json();
-    const companies = data.length
+    const companies = data
 
 
     return (
-        <div className="rounded-2xl border border-gray-200 bg-white shadow-sm p-6 gap-2 flex flex-col max-w-fit items-start justify-center hover:shadow-md transition-shadow">
+        <div className="rounded-2xl border border-gray-200 bg-white shadow-sm p-6 gap-2 flex flex-col max-w-65 items-start justify-center hover:shadow-md transition-shadow">
             <div>
                 <h2 className="text-lg font-semibold text-gray-800">Empresas Cadastradas</h2>
             </div>
