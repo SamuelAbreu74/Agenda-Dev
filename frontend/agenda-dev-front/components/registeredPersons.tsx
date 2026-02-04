@@ -1,3 +1,5 @@
+import { workerData } from "node:worker_threads";
+
 export default async function RegisteredPersons() {
     
     const response = await fetch('http://localhost:3001/persons/count');
