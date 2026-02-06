@@ -38,6 +38,10 @@ export class Company {
     // CONTATO FIXO
     @Column({type: 'varchar', length: 20})
     fixedContact: string;
+
+    // LOGO (URL)
+    @Column({type: 'varchar', length: 255, nullable: true})
+    logoUrl: string;
     
 
     // =-=-=-= ENDEREÇO =-=-=-=
