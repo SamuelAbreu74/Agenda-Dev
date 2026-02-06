@@ -42,6 +42,11 @@ export class CreateCompanyDto {
     @IsString()
     @Length(8, 20)
     fixedContact?: string;
+
+    // LOGO
+    @IsOptional()
+    @IsString()
+    logoUrl?: string;
     
 
     // =-=-=-= ENDEREÇO =-=-=-=
