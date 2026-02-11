@@ -1,4 +1,5 @@
 interface Company {
+    logoUrl: string;
     id: string;
     fantasyName: string;
     companyName: string;
@@ -32,7 +33,8 @@ export default async function CompanyComponent() {
             {companies.map((company: Company) => (
                 <div key={company.id} className="flex items-center justify-between px-4 py-3  text-gray-800  hover:bg-gray-100 hover:shadow-blue-950">
                     <div className="flex  items-center gap-4">
-                        <div>
+                        <div className="flex items-center gap-4">
+                            <img src={company.logoUrl || 'https://via.placeholder.com/60'} alt="Logo" className="mask-circle w-15 h-15 bg-blue-500 rounded-4xl" />
                             <h1>{company.companyName}</h1>
                             <p className="cursor-default"><i>{company.fantasyName}</i></p>
                         </div>
