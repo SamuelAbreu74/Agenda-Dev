@@ -22,6 +22,13 @@ export class PersonController {
     return {message: "Pessoas Listadas com Sucesso!", all_persons};
   }
 
+  // Buscar por Aniversariantes do Dia atual
+  @Get('celebrants')
+  async findBirthCelebrants(){
+    const today_celebrants = await this.personService.findCelebrants();
+    return today_celebrants
+  }
+
   // Buscar pela quantide total de Pessoas cadastradas
   @Get('count')
   async countAll(){
