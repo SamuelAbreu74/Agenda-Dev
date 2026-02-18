@@ -1,5 +1,5 @@
 import PersonComponent from "@/components/personComponent"
-import Button from "@/components/Button"
+import PersonsClient from "@/components/personsClient"
 
 export default async function Persons() {
 
@@ -12,13 +12,7 @@ export default async function Persons() {
                 </header>
 
 
-                {/* Div para SearchBar */}
-                <div className="max-w-dvw min-w-[175] ">
-                    <input type="text" placeholder="SeachBar" className="text-black max-w-80p-3  border border-gray-300 rounded-lg w-full focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"></input>
-                </div>
-
-                {/* Botão Adicionar */}
-                <Button/>
+                <PersonsClient/>
                 {/* Sessão para listar as Pessoas  */}
                 <section className=" shadow-sm border border-gray-200 rounded-lg bg-white overflow-hidden hover:shadow-blue-200 hover:shadow-md transition">
                     {/* Container da Pessoa */}
