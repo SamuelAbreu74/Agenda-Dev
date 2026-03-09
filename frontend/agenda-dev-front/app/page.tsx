@@ -1,3 +1,4 @@
+import CelebrantsComponent from "@/components/celebrantsComponent";
 import RegisteredCompanies from "@/components/registeredCompanies"
 import RegisteredPersons from "@/components/registeredPersons";
 
@@ -11,22 +12,11 @@ export default function Home() {
           <p className="text-sm text-gray-600 mt-1"><i>Quinta-feira, 18 de maio</i></p>
         </header>
 
-
-        <section className="border border-gray-200 rounded-lg bg-white shadow-sm overflow-hidden">
-          <h2 className="bg-blue-900 border-b border-gray-200 px-4 py-3 text-sm font-semibold uppercase text-white">
-            Aniversariantes de Hoje!
-          </h2>
-          <div className="divide-y divide-gray-200">
-            <div className="px-4 py-3 text-gray-800 hover:bg-gray-50 transition-colors">Pessoa 1</div>
-            <div className="px-4 py-3 text-gray-800 hover:bg-gray-50 transition-colors">Pessoa 2</div>
-            <div className="px-4 py-3 text-gray-800 hover:bg-gray-50 transition-colors">Pessoa 3</div>
-          </div>
-        </section>
-
+        <CelebrantsComponent/>
 
         <div className="grid grid-cols-2 gap-5 min-h-40 max-w-250">
           <div className="rounded-2xl border border-gray-200 bg-white shadow-sm p-6 flex items-center justify-center  hover:shadow-md transition-shadow">
-            <h2 className="text-xl font-semibold text-gray-800 text-center">Aniversariantes do Mês</h2>
+            <h2 className="text-xl font-semibold text-gray-800 text-center">Aniversários do Mês</h2>
           </div>
           <div className="grid min-h-60 gap-6">
             <RegisteredCompanies/>
