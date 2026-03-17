@@ -3,7 +3,7 @@ import { Entity, PrimaryGeneratedColumn, Column, ManyToMany, ManyToOne } from "t
 export enum Gender{
     MALE = 'MASCULINO',
     FEMALE = 'FEMININO',
-    OUTRO = 'OUTRO',
+    OTHER = 'OUTRO',
 }
 
 @Entity()

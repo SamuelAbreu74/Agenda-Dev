@@ -3,7 +3,7 @@ import { Gender } from "@/types/gender.enum";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 
-interface Person {
+export interface Person {
     id: string;
     name: string;
     email: string;
@@ -22,10 +22,13 @@ interface Person {
     photoUrl: string | null;
 }
 
+interface PersonComponentProps {
+    onEdit: (person: Person) => void; // Dizemos que ele recebe uma função
+}
 
-
-export default function PersonComponent() {
+export default function PersonComponent({onEdit}: PersonComponentProps) {
     const [persons, setPersons] = useState<Person[]>([]);
+
     // Chamada ao endpoint do backend (GET)
     useEffect(() => {
         const fetchPersons = async () => {
@@ -72,7 +75,7 @@ export default function PersonComponent() {
                     <div className="flex gap-5">
                         <Link href={`https://wa.me/55${person.whatsappContact}`} className="cursor-pointer flex p-1 min-w-30 gap-2 min-h-8 rounded bg-green-500 hover:bg-green-600 transition-colors"><img className="invert" width="24" height="24" src="https://img.icons8.com/material-outlined/24/whatsapp--v1.png" alt="whatsapp--v1" /> <h1 className="text-white">Whatsapp</h1></Link>
                         {/* Botão de Editar */}
-                        <button className="cursor-pointer flex p-1 w-8 gap-2 h-8  rounded-full items-center bg-gray-100 hover:bg-blue-200 transition">
+                        <button className="cursor-pointer flex p-1 w-8 gap-2 h-8  rounded-full items-center bg-gray-100 hover:bg-blue-200 transition" onClick={() => onEdit(person)}>
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" className="size-6 stroke-gray-700 hover:stroke-blue-700 transition-colors">
                                 <path strokeLinecap="round" strokeLinejoin="round" d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10" />
                             </svg>

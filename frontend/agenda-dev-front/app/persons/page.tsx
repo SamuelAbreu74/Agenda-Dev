@@ -1,4 +1,3 @@
-import PersonComponent from "@/components/personComponent"
 import PersonsClient from "@/components/personsClient"
 
 export default async function Persons() {
@@ -13,11 +12,7 @@ export default async function Persons() {
 
 
                 <PersonsClient/>
-                {/* Sessão para listar as Pessoas  */}
-                <section className=" shadow-sm border border-gray-200 rounded-lg bg-white overflow-hidden hover:shadow-blue-200 hover:shadow-md transition">
-                    {/* Container da Pessoa */}
-                    <PersonComponent />
-                </section>
+                
             </main>
         </div>
     )
