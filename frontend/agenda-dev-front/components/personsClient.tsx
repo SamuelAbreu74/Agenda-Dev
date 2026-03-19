@@ -42,7 +42,7 @@ export default function PersonsClient() {
             </section>
 
             {/* Modal para Criar uma nova Pessoa  */}
-            <NewPersonFormModal isOpen={openNewModal} onClose={() => setOpenNewModal(false)} />
+            <NewPersonFormModal isOpen={openNewModal} onClose={() => setOpenNewModal(false)} person={selectedPerson} />
 
             {/* Modal para Editar uma Pessoa */}
             <EditPersonFormModal isOpen={openEditModal} person={selectedPerson} onClose={() => {

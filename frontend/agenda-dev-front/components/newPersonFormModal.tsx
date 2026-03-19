@@ -2,9 +2,16 @@
 
 import { Gender } from "@/types/gender.enum";
 import { useEffect, useState } from "react";
+import { Person } from "./personComponent";
+import { createClient } from "@supabase/supabase-js";
+
+const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!
+const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+const supabase = createClient(supabaseUrl, supabaseAnonKey);
 
 interface NewPersonFormModalProps {
     isOpen: boolean
+    person: Person | null
     onClose: () => void
 }
 
@@ -31,7 +38,7 @@ interface CompanyProps {
     companyName: string
 }
 
-export default function NewPersonFormModal({ isOpen, onClose }: NewPersonFormModalProps) {
+export default function NewPersonFormModal({ isOpen, onClose, person }: NewPersonFormModalProps) {
     const [companies, setCompanies] = useState<CompanyProps[]>([]);
 
     useEffect(() => {
@@ -47,7 +54,6 @@ export default function NewPersonFormModal({ isOpen, onClose }: NewPersonFormMod
                 console.error("Erro ao carregar empresas: ", error);
             });
     }, []);
-
 
     
     
@@ -70,7 +76,6 @@ export default function NewPersonFormModal({ isOpen, onClose }: NewPersonFormMod
         photoUrl: ''
     });
 
-    if (!isOpen) return null;
     
     // Funçao para atualizar o estado ao preencher o formulario
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
@@ -103,7 +108,36 @@ export default function NewPersonFormModal({ isOpen, onClose }: NewPersonFormMod
         }
     }
     
+    const handlePhotoUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+        const file = e.target.files?.[0];
+        if (!file) return;
+        
+        try {
+            const fileExt = file.name.split('.').pop();
+            const fileName = `${Date.now()}-${Math.random().toString(36).substring(7)}.${fileExt}`;
+            const filePath = `avatars/${fileName}`;
+            
+            const { error: uploadError } = await supabase.storage
+            .from('avatars')
+            .upload(filePath, file);
+            
+            if (uploadError) throw uploadError;
+            
+            const { data: { publicUrl } } = supabase.storage
+            .from('avatars')
+            .getPublicUrl(filePath);
+            
+            // Apenas atualiza o estado local do formulário
+            setFormData(prev => ({ ...prev, photoUrl: publicUrl }));
+            
+        } catch (error) {
+            console.error('Erro no upload:', error);
+            alert("Falha ao carregar imagem.");
+        }
+    };
     
+    
+    if (!isOpen) return null;
     return (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4">
             <div className="flex flex-col w-full max-w-3xl max-h-[90vh] overflow-y-auto border-2 rounded-2xl border-black shadow-md shadow-blue-200 p-6 bg-blue-950 text-white">
@@ -169,7 +203,10 @@ export default function NewPersonFormModal({ isOpen, onClose }: NewPersonFormMod
                     </div>
                     <div className="flex flex-col gap-2 md:col-span-2">
                         <label htmlFor="profile_pic" >Foto de Perfil: </label>
-                        <input onChange={handleChange} name="photoUrl" value={formData.photoUrl} type="file" className="w-full p-1 border rounded text-white" />
+                        <input name="photoUrl" onChange={handlePhotoUpload} type="file" accept="image/*" className="w-full p-1 border rounded text-white file:mr-4 file:py-1 file:px-4 file:rounded-full file:border-0 file:text-sm file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100" />
+                         {formData.photoUrl && (
+                            <p className="text-xs text-blue-300">Foto atual: {formData.photoUrl.split('/').pop()}</p>
+                        )}
                     </div>
 
                     {/* DADOS DE ENDEREÇO */}
