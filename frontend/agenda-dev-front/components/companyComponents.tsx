@@ -1,5 +1,8 @@
+<<<<<<< HEAD
+=======
 import { useEffect, useState } from "react";
 
+>>>>>>> 32e33cb610fc9a83c466d4e93f5605bff776008f
 export interface Company {
     logoUrl: string;
     id: string;
