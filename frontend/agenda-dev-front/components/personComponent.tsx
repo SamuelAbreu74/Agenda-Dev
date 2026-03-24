@@ -1,4 +1,3 @@
-'use client'
 import { Gender } from "@/types/gender.enum";
 import Link from "next/link";
 import { useEffect, useState } from "react";
@@ -39,7 +38,6 @@ export default function PersonComponent({onEdit}: PersonComponentProps) {
         fetchPersons();
     }, [])
 
-
     // Chamada ao endpoint do backend (DELETE)
     const handleDeletePerson = async (personId: string) => {
         if (!confirm("Tem certeza que deseja excluir?")) return;
@@ -59,7 +57,6 @@ export default function PersonComponent({onEdit}: PersonComponentProps) {
             console.error("Erro na requisição: ", error);
         }
     }
-
 
     return (
         <div>
@@ -92,5 +89,4 @@ export default function PersonComponent({onEdit}: PersonComponentProps) {
             }
         </div>
     )
-
 }
