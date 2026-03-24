@@ -1,4 +1,4 @@
-interface Company {
+export interface Company {
     logoUrl: string;
     id: string;
     fantasyName: string;
