@@ -1,3 +1,8 @@
+<<<<<<< HEAD
+=======
+import { useEffect, useState } from "react";
+
+>>>>>>> 32e33cb610fc9a83c466d4e93f5605bff776008f
 export interface Company {
     logoUrl: string;
     id: string;
@@ -17,17 +22,22 @@ export interface Company {
     cep: string;
 }
 
-export default async function CompanyComponent() {
-    
-    
-    // Chamada ao endpoint do backend
-    const response = await fetch('http://localhost:3001/companies')
-    const data = await response.json()
-    const companies = data
-    
-    
-    
-    
+export default function CompanyComponent() {
+
+    const [companies, setCompanies] = useState<Company[]>([]);
+
+    // Chamada ao endpoint do backend (GET)
+    useEffect(() => {
+        const fetchCompanies = async () => {
+            const response = await fetch('http://localhost:3001/companies');
+            const data = await response.json();
+            setCompanies(data);
+        }
+        fetchCompanies();
+    }, [])
+
+
+
     return (
         <div>
             {companies.map((company: Company) => (
