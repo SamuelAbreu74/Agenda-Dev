@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 console.log("teste");
 
 
+
+
 export interface Company {
     logoUrl: string;
     id: string;
