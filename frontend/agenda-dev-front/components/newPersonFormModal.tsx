@@ -89,7 +89,7 @@ export default function NewPersonFormModal({ isOpen, onClose, person }: NewPerso
 
         if (formData == null) {
             console.log("sem nada no formulario");
-        } else {
+        }else{
             console.log("Formulario nao esta vazio");
         }
 
