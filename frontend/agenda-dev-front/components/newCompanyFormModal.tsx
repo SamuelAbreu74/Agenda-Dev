@@ -1,5 +1,5 @@
 import { Company } from "./companyComponents"
-import { useState } from "react"
+import { useState, useEffect } from "react"
 
 interface NewCompanyFormModalProps {
     isOpen: boolean
@@ -25,8 +25,29 @@ interface CompanyFormData {
     cep: string;
 }
 
+interface PersonProps {
+    id: string;
+    name: string;
+}
 
-export default function NewCompanyFormModal({ isOpen, onClose, company }: NewCompanyFormModalProps) {
+
+export default function NewCompanyFormModal({ isOpen, onClose }: NewCompanyFormModalProps) {
+    const [persons, setPersons] = useState<PersonProps[]>([]);
+
+    useEffect(() => {
+        fetch("http://localhost:3001/persons")
+            .then((res) => res.json())
+            .then((data) => {
+                setPersons(data.all_persons)
+                if (data.all_persons.length > 0) {
+                    setFormData(prev => ({ ...prev, accountable: data.all_persons[0].name }));
+                }
+            })
+            .catch((error) => {
+                console.error("Erro ao carregar pessoas ", error);
+            });
+    }, []);
+
 
     // Criando estado para os dados
     const [formData, setFormData] = useState<CompanyFormData>({
@@ -78,7 +99,7 @@ export default function NewCompanyFormModal({ isOpen, onClose, company }: NewCom
         } catch (error) {
             console.error("Erro na requisiçao: ", error);
         }
-    };
+    }
 
     if (!isOpen) return null;
 
@@ -101,24 +122,32 @@ export default function NewCompanyFormModal({ isOpen, onClose, company }: NewCom
 
                     {/* DADOS PESSOAIS */}
                     <div className="flex flex-col gap-2">
-                        <label htmlFor="name">Nome Fantasia: </label>
-                        <input onChange={handleChange} name="name" value={formData.fantasyName} type="text" placeholder="Samuel de Abreu Moisés" className="w-full p-1 border rounded text-white" />
+                        <label htmlFor="fantasyName">Nome Fantasia: </label>
+                        <input onChange={handleChange} name="fantasyName" value={formData.fantasyName} type="text" placeholder="Cacau Show" className="w-full p-1 border rounded text-white" />
                     </div>
                     <div className="flex flex-col gap-2">
-                        <label htmlFor="email" >Razão Social: </label>
-                        <input onChange={handleChange} name="email" value={formData.companyName} type="text" placeholder="samuel123@gmail.com" className="w-full p-1 border rounded text-white" />
+                        <label htmlFor="companyName" >Razão Social: </label>
+                        <input onChange={handleChange} name="companyName" value={formData.companyName} type="text" placeholder="IBAC – Indústria Brasileira de Alimentos e Chocolates Ltda" className="w-full p-1 border rounded text-white" />
                     </div>
                     <div className="flex flex-col gap-2">
                         <label htmlFor="email" >Email: </label>
-                        <input onChange={handleChange} name="email" value={formData.email} type="text" placeholder="samuel123@gmail.com" className="w-full p-1 border rounded text-white" />
+                        <input onChange={handleChange} name="email" value={formData.email} type="text" placeholder="empresa123@gmail.com" className="w-full p-1 border rounded text-white" />
                     </div>
                     <div className="flex flex-col gap-2">
-                        <label htmlFor="email" >CNPJ: </label>
-                        <input onChange={handleChange} name="email" value={formData.cnpj} type="text" placeholder="samuel123@gmail.com" className="w-full p-1 border rounded text-white" />
+                        <label htmlFor="cnpj" >CNPJ: </label>
+                        <input onChange={handleChange} name="cnpj" value={formData.cnpj} type="text" placeholder="00.000.000/0000-00" className="w-full p-1 border rounded text-white" />
                     </div>
                     <div className="flex flex-col gap-2">
-                        <label htmlFor="email" >Responsável: </label>
-                        <input onChange={handleChange} name="email" value={formData.accountable} type="text" placeholder="samuel123@gmail.com" className="w-full p-1 border rounded text-white" />
+                        <label htmlFor="accountable" >Responsável: </label>
+                        <select onChange={handleChange} name="accountable" value={formData.accountable} className="w-full p-1 border rounded text-white">
+                            <option value="nobody" className="bg-blue-950 text-white font-thin">Sem Responsável</option>
+                            {persons.length === 0 && <option value="">Carregando...</option>}
+                            {persons.map((person) => (
+                                <option key={person.id} value={person.id} className="bg-blue-950 text-white">
+                                    {person.name}
+                                </option>
+                            ))}
+                        </select>
                     </div>
                     <div className="flex flex-col gap-2">
                         <label htmlFor="contact">Contato (Celular): </label>
@@ -130,7 +159,7 @@ export default function NewCompanyFormModal({ isOpen, onClose, company }: NewCom
                     </div>
                     <div className="flex flex-col gap-2">
                         <label htmlFor="contact">Contato (Fixo): </label>
-                        <input onChange={handleChange} name="whatsappContact" value={formData.fixedContact} type="tel" placeholder="(00) 9 0000-0000" className="w-full p-1 border rounded text-white" />
+                        <input onChange={handleChange} name="fixedContact" value={formData.fixedContact} type="tel" placeholder="(00) 9 0000-0000" className="w-full p-1 border rounded text-white" />
                     </div>
                     <div className="flex flex-col gap-2 md:col-span-2">
                         <label htmlFor="profile_pic" >Logo de Perfil: </label>
