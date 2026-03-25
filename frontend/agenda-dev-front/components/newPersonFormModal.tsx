@@ -47,16 +47,16 @@ export default function NewPersonFormModal({ isOpen, onClose, person }: NewPerso
             .then((data) => {
                 setCompanies(data)
                 if (data.length > 0) {
-                setFormData(prev => ({ ...prev, company: data[0].companyName }));
-            }   
+                    setFormData(prev => ({ ...prev, company: data[0].companyName }));
+                }
             })
             .catch((error) => {
                 console.error("Erro ao carregar empresas: ", error);
             });
     }, []);
 
-    
-    
+
+
     // Criando estado para os dados
     const [formData, setFormData] = useState<PersonFormData>({
         name: '',
@@ -76,19 +76,25 @@ export default function NewPersonFormModal({ isOpen, onClose, person }: NewPerso
         photoUrl: ''
     });
 
-    
+
     // Funçao para atualizar o estado ao preencher o formulario
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
-        const {name, value} = e.target;
-        setFormData(prev => ({...prev, [name]: value}))
+        const { name, value } = e.target;
+        setFormData(prev => ({ ...prev, [name]: value }))
     }
-    
+
     // Funçao geral que envia os dados
     const handleSubmit = async (event: React.FormEvent) => {
         event.preventDefault();
-        
+
+        if (formData == null) {
+            console.log("sem nada no formulario");
+        } else {
+            console.log("Formulario nao esta vazio");
+        }
+
         // Requisição POST na API para cadastrar nova pessoa.
-        try{
+        try {
             const response = await fetch("http://localhost:3001/persons", {
                 method: "POST",
                 headers: {
@@ -96,47 +102,47 @@ export default function NewPersonFormModal({ isOpen, onClose, person }: NewPerso
                 },
                 body: JSON.stringify(formData),
             });
-            
-            if(response.ok){
+
+            if (response.ok) {
                 onClose(); // Fecha o Modal
-            }else {
+            } else {
                 console.error("Erro ao salvar.");
             }
-            
-        }catch(error){
+
+        } catch (error) {
             console.error("Erro na requisiçao: ", error);
         }
     }
-    
+
     const handlePhotoUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
         const file = e.target.files?.[0];
         if (!file) return;
-        
+
         try {
             const fileExt = file.name.split('.').pop();
             const fileName = `${Date.now()}-${Math.random().toString(36).substring(7)}.${fileExt}`;
             const filePath = `avatars/${fileName}`;
-            
+
             const { error: uploadError } = await supabase.storage
-            .from('avatars')
-            .upload(filePath, file);
-            
+                .from('avatars')
+                .upload(filePath, file);
+
             if (uploadError) throw uploadError;
-            
+
             const { data: { publicUrl } } = supabase.storage
-            .from('avatars')
-            .getPublicUrl(filePath);
-            
+                .from('avatars')
+                .getPublicUrl(filePath);
+
             // Apenas atualiza o estado local do formulário
             setFormData(prev => ({ ...prev, photoUrl: publicUrl }));
-            
+
         } catch (error) {
             console.error('Erro no upload:', error);
             alert("Falha ao carregar imagem.");
         }
     };
-    
-    
+
+
     if (!isOpen) return null;
     return (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4">
@@ -178,7 +184,7 @@ export default function NewPersonFormModal({ isOpen, onClose, person }: NewPerso
                     </div>
                     <div className="flex flex-col gap-2">
                         <label htmlFor="gender">Gênero:</label>
-                        <select onChange={handleChange} name="gender" value={formData.gender}  className="w-full p-1 border rounded text-white">
+                        <select onChange={handleChange} name="gender" value={formData.gender} className="w-full p-1 border rounded text-white">
                             {Object.entries(Gender).map(([key, value]) => (
                                 <option key={key} value={value} className="bg-blue-950 text-white">
                                     {value}
@@ -192,7 +198,7 @@ export default function NewPersonFormModal({ isOpen, onClose, person }: NewPerso
                     </div>
                     <div className="flex flex-col gap-2">
                         <label htmlFor="company" >Empresa que Trabalha: </label>
-                        <select onChange={handleChange} name="company" value={formData.company}  className="w-full p-1 border rounded text-white">
+                        <select onChange={handleChange} name="company" value={formData.company} className="w-full p-1 border rounded text-white">
                             {companies.length === 0 && <option value="">Carregando...</option>}
                             {companies.map((company) => (
                                 <option key={company.id} value={company.id} className="bg-blue-950 text-white">
@@ -204,7 +210,7 @@ export default function NewPersonFormModal({ isOpen, onClose, person }: NewPerso
                     <div className="flex flex-col gap-2 md:col-span-2">
                         <label htmlFor="profile_pic" >Foto de Perfil: </label>
                         <input name="photoUrl" onChange={handlePhotoUpload} type="file" accept="image/*" className="w-full p-1 border rounded text-white file:mr-4 file:py-1 file:px-4 file:rounded-full file:border-0 file:text-sm file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100" />
-                         {formData.photoUrl && (
+                        {formData.photoUrl && (
                             <p className="text-xs text-blue-300">Foto atual: {formData.photoUrl.split('/').pop()}</p>
                         )}
                     </div>
