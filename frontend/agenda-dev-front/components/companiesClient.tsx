@@ -1,24 +1,24 @@
 'use client'
 import AddButton from "./addButton";
 import CompanyComponent, { Company } from "./companyComponents";
+import EditcompanyFormModal from "./editCompanyFormModal";
 import NewCompanyFormModal from "./newCompanyFormModal";
 import { useState } from "react";
 
 export default function CompaniesClient() {
 
     const [openNewModal, setOpenNewModal] = useState<boolean>(false);
-    // const [openEditModal, setOpenEditModal] = useState<boolean>(false);
+    const [openEditModal, setOpenEditModal] = useState<boolean>(false);
     const [selectedCompany, setSelectedCompany] = useState<Company | null>(null);
 
+    const handleEdit = (company: Company) => {
+        setSelectedCompany(company);
+        setOpenEditModal(true);
+    };
 
-    // const handleEdit = (person: Person) => {
-    //     setSelectedPerson(person);
-    //     setOpenEditModal(true);
-    // };
-
-    // const refreshList = () => {
-    // window.location.reload();
-    // };
+    const refreshList = () => {
+        window.location.reload();
+    };
 
     return (
         <section className="flex flex-col gap-6">
@@ -34,21 +34,21 @@ export default function CompaniesClient() {
                 </div>
             </div>
 
-            {/* Sessão para listar as Pessoas  */}
+            {/* Sessão para listar as Empresas  */}
             <section className=" shadow-sm border border-gray-200 rounded-lg bg-white overflow-hidden hover:shadow-blue-200 hover:shadow-md transition">
                 {/* Container da Pessoa */}
-                <CompanyComponent />
+                <CompanyComponent onEdit={handleEdit} />
             </section>
 
-            {/* Modal para Criar uma nova Pessoa  */}
+            {/* Modal para Criar uma nova Empresa  */}
             <NewCompanyFormModal isOpen={openNewModal} onClose={() => setOpenNewModal(false)} company={selectedCompany} />
 
-            {/* Modal para Editar uma Pessoa */}
-            {/* <EditPersonFormModal isOpen={openEditModal} person={selectedPerson} onClose={() => {
+            {/* Modal para Editar uma Empresa */}
+            <EditcompanyFormModal isOpen={openEditModal} company={selectedCompany} onClose={() => {
                 setOpenEditModal(false);
-                setSelectedPerson(null);
+                setSelectedCompany(null);
             }} onUpdate={refreshList}
-            /> */}
+            />
         </section>
     )
 }
