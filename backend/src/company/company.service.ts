@@ -22,7 +22,7 @@ export class CompanyService {
   }
 
   async findAll() {
-    const result = await this.companiesRepository.find();
+    const result = await this.companiesRepository.find({ relations: ['accountable'] });
     return result;
   }
 
@@ -35,7 +35,7 @@ export class CompanyService {
     return result;
   }
 
-  async countAll(){
+  async countAll() {
     const result = await this.companiesRepository.find();
     const total_of_companies = result.length
     return total_of_companies;
@@ -47,7 +47,7 @@ export class CompanyService {
   }
 
   async remove(id: string) {
-    const result = await this.companiesRepository.delete({id: id})
+    const result = await this.companiesRepository.delete({ id: id })
     return result;
   }
 }
