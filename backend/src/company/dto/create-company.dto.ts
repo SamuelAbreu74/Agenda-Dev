@@ -24,8 +24,9 @@ export class CreateCompanyDto {
     cnpj!: string;
 
     // RESPONSÁVEL
-    @IsIdentityCard()
-    accountable!: Person;
+    @IsString()
+    @Length(2, 150,{message: "Não pode estar vazio ou com menos de 2 caracteres"})
+    accountable!: Person;   
     
     // CONTATO WHATSAPP
     @IsString()

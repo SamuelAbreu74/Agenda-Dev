@@ -1,5 +1,5 @@
 import { Person } from "../../person/entities/person.entity";
-import { Column, Entity, JoinColumn, OneToOne, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity()
 export class Company {
@@ -24,7 +24,7 @@ export class Company {
     cnpj!: string;
 
     // RESPONSÁVEL
-    @OneToOne(() => Person)
+    @ManyToOne(() => Person, (person) => person.company)
     @JoinColumn()
     accountable!: Person;
 
