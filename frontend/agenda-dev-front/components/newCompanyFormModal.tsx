@@ -1,5 +1,10 @@
 import { Company } from "./companyComponents"
 import { useState, useEffect } from "react"
+import { createClient } from "@supabase/supabase-js";
+
+const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!
+const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+const supabase = createClient(supabaseUrl, supabaseAnonKey);
 
 interface NewCompanyFormModalProps {
     isOpen: boolean
@@ -34,6 +39,7 @@ interface PersonProps {
 export default function NewCompanyFormModal({ isOpen, onClose }: NewCompanyFormModalProps) {
     const [persons, setPersons] = useState<PersonProps[]>([]);
 
+    // Buscando Pessoas para listar no atributo de responsáveis
     useEffect(() => {
         fetch("http://localhost:3001/persons")
             .then((res) => res.json())
@@ -101,6 +107,35 @@ export default function NewCompanyFormModal({ isOpen, onClose }: NewCompanyFormM
         }
     }
 
+    // Função para enviar a logo da empresa
+    const handleLogoUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+        const file = e.target.files?.[0];
+        if (!file) return;
+
+        try {
+            const fileExt = file.name.split('.').pop();
+            const fileName = `${Date.now()}-${Math.random().toString(36).substring(7)}.${fileExt}`;
+            const filePath = `logos/${fileName}`;
+
+            const { error: uploadError } = await supabase.storage
+                .from('logos')
+                .upload(filePath, file);
+
+            if (uploadError) throw uploadError;
+
+            const { data: { publicUrl } } = supabase.storage
+                .from('logos')
+                .getPublicUrl(filePath);
+
+            // Apenas atualiza o estado local do formulário
+            setFormData(prev => ({ ...prev, logoUrl: publicUrl }));
+
+        } catch (error) {
+            console.error('Erro no upload:', error);
+            alert("Falha ao carregar imagem.");""
+        }
+    };
+
     if (!isOpen) return null;
 
     return (
@@ -162,11 +197,11 @@ export default function NewCompanyFormModal({ isOpen, onClose }: NewCompanyFormM
                         <input onChange={handleChange} name="fixedContact" value={formData.fixedContact} type="tel" placeholder="(00) 9 0000-0000" className="w-full p-1 border rounded text-white" />
                     </div>
                     <div className="flex flex-col gap-2 md:col-span-2">
-                        <label htmlFor="profile_pic" >Logo de Perfil: </label>
-                        {/* <input name="photoUrl" onChange={handlePhotoUpload} type="file" accept="image/*" className="w-full p-1 border rounded text-white file:mr-4 file:py-1 file:px-4 file:rounded-full file:border-0 file:text-sm file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100" />
-                        {formData.photoUrl && (
-                            <p className="text-xs text-blue-300">Foto atual: {formData.photoUrl.split('/').pop()}</p>
-                        )} */}
+                        <label htmlFor="profile_pic" >Logo da Empresa: </label>
+                        <input name="logoUrl" onChange={handleLogoUpload} type="file" accept="image/*" className="w-full p-1 border rounded text-white file:mr-4 file:py-1 file:px-4 file:rounded-full file:border-0 file:text-sm file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100" />
+                        {formData.logoUrl && (
+                            <p className="text-xs text-blue-300">Logo atual: {formData.logoUrl.split('/').pop()}</p>
+                        )}
                     </div>
                     {/* DADOS DE ENDEREÇO */}
                     <h2 className="text-2xl md:col-span-2 mt-4 border-b border-blue-800 pb-2">Endereço</h2>
