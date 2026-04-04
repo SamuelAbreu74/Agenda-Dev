@@ -1,4 +1,4 @@
-import { Entity, PrimaryGeneratedColumn, Column, ManyToMany, ManyToOne } from "typeorm";
+import { Entity, PrimaryGeneratedColumn, Column } from "typeorm";
 
 export enum Gender{
     MALE = 'MASCULINO',
@@ -11,69 +11,69 @@ export class Person {
 
     // ID
     @PrimaryGeneratedColumn('uuid')
-    id: string;
+  id!: string;
 
     // NOME
-    @Column({type: 'varchar', length: 150})
-    name: string;
+    @Column({ type: 'varchar', length: 150 })
+  name!: string;
 
     // EMAIL
-    @Column({type: 'varchar', length: 150, unique: true})
-    email: string;
+    @Column({ type: 'varchar', length: 150, unique: true })
+  email!: string;
 
     // CONTATO WHATSAPP
-    @Column({type: 'varchar', length: 20})
-    whatsappContact: string;
+    @Column({ type: 'varchar', length: 20 })
+  whatsappContact!: string;
 
     // CONTATO CELULAR
-    @Column({type: 'varchar', length: 20})
-    cellContact: string;
+    @Column({ type: 'varchar', length: 20 })
+  cellContact!: string;
 
     // =-=-=-= ENDEREÇO =-=-=-=
     
     //  RUA
-    @Column({type: 'varchar', length: 150})
-    street: string;
+    @Column({ type: 'varchar', length: 150 })
+  street!: string;
 
     // NÚMERO
-    @Column({type: 'varchar', length: 10})
-    number: string;
+    @Column({ type: 'varchar', length: 10 })
+  number!: string;
 
     // BAIRRO
-    @Column({type: 'varchar', length: 100})
-    neighborhood: string;
+    @Column({ type: 'varchar', length: 100 })
+  neighborhood!: string;
 
     // CIDADE
-    @Column({type: 'varchar', length: 100})
-    city: string;
+    @Column({ type: 'varchar', length: 100 })
+  city!: string;
 
     // ESTADO (UF)
-    @Column({type: 'varchar', length: 2})
-    state: string;
+    @Column({ type: 'varchar', length: 2 })
+  state!: string;
     
     // CEP
-    @Column({type: 'varchar', length: 8})
-    cep: string;
+    @Column({ type: 'varchar', length: 8 })
+  cep!: string;
 
     // DATA DE NASCIMENTO
-    @Column({type: 'date'})
-    birthDate: Date;
+    @Column({ type: 'date' })
+  birthDate!: Date;
 
     // SEXO
-    @Column({type: 'enum', enum: Gender})
-    gender: Gender;
+    @Column({ type: 'enum', enum: Gender })
+  gender!: Gender;
 
     // PROFISSÃO
-    @Column({type: 'varchar', length: 100})
-    profession: string;
+    @Column({ type: 'varchar', length: 100 })
+  profession!: string;
 
     // EMPRESA QUE TRABALHA
-    @Column({type: 'varchar', length: 150})
-    company: string;
+    @Column({ type: 'varchar', length: 150 })
+  company!: string;
 
     // FOTO DE PERFIL (URL)
-    @Column({type: 'varchar', length: 255, nullable: true})
-    photoUrl: string;
+    @Column({ type: 'varchar', length: 255, nullable: true })
+  photoUrl!: string;
 
 
 }
